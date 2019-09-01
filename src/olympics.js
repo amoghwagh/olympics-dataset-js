@@ -33,4 +33,4 @@ function NumberOfCities (athletesJSON) {
 module.exports = {
     NumberOfCities : NumberOfCities
      
-}
+} 
