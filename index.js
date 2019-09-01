@@ -7,3 +7,9 @@ let Olympics = require('./src/olympics.js')
 csvToJsonFunc('./Dataset/athlete_events.csv').then((athlete_events) =>{
     console.log(Olympics.NumberOfCities(athlete_events));    
 })
+
+csvToJsonFunc('./Dataset/athlete_events.csv').then((athlete_events) => {
+        csvToJsonFunc('./Dataset/noc_regions.csv').then((noc_regions) => {
+                console.log(Olympics.topTenCountries(athlete_events,noc_regions))
+        })  
+})
