@@ -19,15 +19,14 @@ function NumberOfCities (athletesJSON) {
         return acc;
 
         },{})
-        console.log(totalCount)
         
-    for (let key in cityCountObj) {
-        let oneViz = {}
-        oneViz["name"] = key;
-        oneViz["y"] = (cityCountObj[key]/totalCount)*100;
-        cityCountViz.push(oneViz);
-    }
-    return cityCountViz;
+    // for (let key in cityCountObj) {
+    //     let oneViz = {}
+    //     oneViz["name"] = key;
+    //     oneViz["y"] = (cityCountObj[key]/totalCount)*100;
+    //     cityCountViz.push(oneViz);
+    // }
+    return cityCountObj;
 }
 
 function topTenCountries (eventsJson,nocJson) {
@@ -87,7 +86,64 @@ function topTenCountries (eventsJson,nocJson) {
 //     }]
 }
 
+function NumberOfParticipants (athletesJSON) {
+    let currentYear = new Date().getFullYear();
+    let numberOfDecades = Math.ceil((currentYear-1890) / 10);
+    var startDecade = 189;
+    let decadeObjArray = new Array(1).fill(undefined)
+
+    decadeObjArray = decadeObjArray.map(Object).map((ele) => {
+            iteration = 0;
+            while(iteration < numberOfDecades)
+            {
+                ele[startDecade] = {
+                    "M" : new Set(),
+                    "F" : new Set()
+                }
+                startDecade += 1;
+                iteration++;
+            }
+        return ele;
+    }) 
+
+    let reducedJson = athletesJSON.reduce( (byYear,event) =>{
+        if(event["Year"]) {
+            let determiner = String(parseInt((event["Year"] / 10)))
+            if(byYear[determiner])
+            {
+                byYear[determiner][event["Sex"]].add(event["Name"])
+            }      
+        }
+        return byYear;
+    },decadeObjArray[0])
+    
+    let participantsJson = {}
+    
+    for(let year of Object.keys(reducedJson)) {
+        reducedJson[year]["M"] = reducedJson[year]["M"].size;
+        reducedJson[year]["F"] = reducedJson[year]["F"].size;
+        let lowerIndex = parseInt(year)*10;
+        let higherIndex = ((parseInt(year)+1)*10-1);
+        let newKey = String(lowerIndex).concat('-').concat(higherIndex)
+
+        participantsJson[newKey] = Object.assign({},reducedJson[year])
+    }
+    return participantsJson
+
+    // let series = Object.keys(participantsJson)
+    // let seriesData = 0;
+    // let maleData = [];
+    // let femaleData = [];
+    // for(let decade in participantsJson) {
+    //         maleData.push(participantsJson[decade]["M"])
+    //         femaleData.push(participantsJson[decade]["F"])
+    // }
+
+}
+
+
 module.exports = {
     NumberOfCities : NumberOfCities,
-    topTenCountries: topTenCountries
+    topTenCountries: topTenCountries,
+    NumberOfParticipants: NumberOfParticipants
 } 
