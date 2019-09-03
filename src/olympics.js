@@ -17,17 +17,18 @@ function NumberOfCities (athletesJSON) {
             totalCount++;
         }
         return acc;
-
         },{})
         console.log(totalCount)
         
-    for (let key in cityCountObj) {
-        let oneViz = {}
-        oneViz["name"] = key;
-        oneViz["y"] = (cityCountObj[key]/totalCount)*100;
-        cityCountViz.push(oneViz);
-    }
-    return cityCountViz;
+    // for (let key in cityCountObj) {
+    //     let oneViz = {}
+    //     oneViz["name"] = key;
+    //     oneViz["y"] = (cityCountObj[key]/totalCount)*100;
+    //     cityCountViz.push(oneViz);
+    // }
+    // return cityCountViz;
+
+    return cityCountObj
 }
 
 function topTenCountries (eventsJson,nocJson) {
