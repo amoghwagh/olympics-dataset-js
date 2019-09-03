@@ -6,7 +6,7 @@
 5) Find out all medal winners from India per season - Table
 */
 
-function topTenCountries (eventsJson,nocJson) {
+function topTenCountries (eventsJson,nocJson,number) {
     let noc = eventsJson.reduce((acc,event) => {
         if( event["Year"] > 2000 && event["Medal"] != 'NA' ) {
             if(acc[event["NOC"]]) {
@@ -23,7 +23,7 @@ function topTenCountries (eventsJson,nocJson) {
         return acc; 
     },{})
 
-    let topTenNoc = Object.values(noc).sort( (a,b) =>b["totalMedals"] - a["totalMedals"]).slice(0,10);
+    let topTenNoc = Object.values(noc).sort( (a,b) =>b["totalMedals"] - a["totalMedals"]).slice(0,num);
     let countryToRegionMap = new Map();
 
     for (let nocMapping of nocJson ) {
