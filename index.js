@@ -8,4 +8,5 @@ csvToJsonFunc('./Dataset/athlete_events.csv').then((athlete_events) => {
                 console.log(Olympics.NumberOfCities(athlete_events)); 
                 console.log(Olympics.topCountries(athlete_events,noc_regions,10))
         })  
+        
 })
