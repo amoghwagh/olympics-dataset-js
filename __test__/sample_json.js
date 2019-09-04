@@ -99,7 +99,8 @@ let athlete_json = [{
     Sport: 'Athletics',
     Event: "Athletics Men's 1,500 metres",
     Medal: 'NA'
-  }]
+  },
+  ]
 
 let expected_output = {
 "Atlanta": 2,
