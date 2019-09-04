@@ -21,7 +21,6 @@ function NumberOfCities (athletesJSON) {
     return cityCountObj;
 }
 
-
 function topCountries (eventsJson,nocJson,number) {
     let noc = eventsJson.reduce((acc,event) => {
         if( event["Year"] > 2000 && event["Medal"] != 'NA' ) {
