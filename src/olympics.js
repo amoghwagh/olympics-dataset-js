@@ -53,29 +53,6 @@ function topCountries (eventsJson,nocJson,number) {
         return acc;
     },{})
     return topCountries
-
-//     let categories = Object.keys(topCountries)
-//     let medalsArray = new Array(3).fill(0);
-//     for(let medals in medalsArray) {
-//         medalsArray[medals] = new Array();
-//     }
-
-//     for(let country in topCountries) {
-//         medalsArray[0].push(topCountries[country]["Gold"])
-//         medalsArray[1].push(topCountries[country]["Silver"])
-//         medalsArray[2].push(topCountries[country]["Bronze"])
-//     }
-
-//     let series = [{
-//         name: 'Gold',
-//         data: medalsArray[0]
-//     }, {
-//         name: 'Silver',
-//         data: medalsArray[1]
-//     }, {
-//         name: 'Bronze',
-//         data: medalsArray[2]
-//     }]
 }
 
 function NumberOfParticipants (athletesJSON) {

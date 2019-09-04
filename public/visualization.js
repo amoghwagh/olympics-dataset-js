@@ -3,6 +3,7 @@
     .then(data => {
         numberOfTimesHostedChart(data["NumberOfCities"])
         topCountriesChart(data["topCountries"])
+        participantsChart(data["numberOfParticipants"])
     })
 
 
@@ -118,6 +119,60 @@ function topCountriesChart(topCountries) {
         }, {
             name: 'Bronze',
             data: medalsArray[2]
+        }]
+    });
+}
+
+function participantsChart (participantsJson) {
+    let seriesData = 0;
+    let maleData = [];
+    let femaleData = [];
+    for(let decade in participantsJson) {
+            maleData.push(participantsJson[decade]["M"])
+            femaleData.push(participantsJson[decade]["F"])
+    }
+
+    Highcharts.chart('participants', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Male and Female Participants by Decade'
+        },
+        subtitle: {
+            text: 'Source: Olympics.com'
+        },
+        xAxis: {
+            categories: Object.keys(participantsJson),
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Participants'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.0f} participants</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'Male',
+            data: maleData
+    
+        }, {
+            name: 'Female',
+            data: femaleData
         }]
     });
 }
