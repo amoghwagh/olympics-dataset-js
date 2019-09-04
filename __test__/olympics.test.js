@@ -4,9 +4,11 @@ let Olympics = require('../src/olympics.js')
 let athlete_events_json = require('./sample_json.js')
 let athlete_events_json_top = require('./sample_json_top10.js')
 let athlete_events_json_participants = require('./sample_json_participants.js')
+let athlete_events_json_average = require('./sample_json_average.js')
 let numberOfCitiesFunc = Olympics.NumberOfCities;
 let topCountries = Olympics.topCountries;
 let numberOfParticipants = Olympics.NumberOfParticipants
+let averageAgeBoxing = Olympics.averageAgeBoxing
 
 describe("Olympics Project Tests", () => {
   describe("Number of times Olympics was hosted per city over the years", ()=>{ 
@@ -43,6 +45,18 @@ describe("Olympics Project Tests", () => {
     })
     test("Expected Output", () => {
       expect(numberOfParticipants(athlete_events_json_participants.athlete_json,)).toEqual(athlete_events_json_participants.expected_output)
+    })
+  })
+  describe("Average age of athletes who participated in Boxing Men's Heavyweight", ()=>{ 
+    test("Should be defined", ()=> {
+        expect(averageAgeBoxing).toBeDefined();
+    })
+    test("Should be an Object", () => {
+      expect(typeof averageAgeBoxing(athlete_events_json_average.athlete_json)).toEqual("object")
+
+    })
+    test("Expected Output", () => {
+      expect(averageAgeBoxing(athlete_events_json_average.athlete_json)).toEqual(athlete_events_json_average.expected_output)
     })
   })
 })

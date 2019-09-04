@@ -4,6 +4,7 @@
         numberOfTimesHostedChart(data["NumberOfCities"])
         topCountriesChart(data["topCountries"])
         participantsChart(data["numberOfParticipants"])
+        averageAgeChart(data["averageAgeBoxing"])
     })
 
 
@@ -173,6 +174,46 @@ function participantsChart (participantsJson) {
         }, {
             name: 'Female',
             data: femaleData
+        }]
+    });
+}
+
+function averageAgeChart (averageCountJson) {
+    let values = [];
+    for(year of Object.keys(averageCountJson)) {
+        values.push(parseFloat(averageCountJson[year]["average"]))
+    }
+    console.log(values)
+    console.log(Object.values(averageCountJson))
+    Highcharts.chart('averageAge', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Average age per season of athletes who participated in Boxing Men\'s Heavyweight'
+        },
+        subtitle: {
+            text: 'Source: Olympics.com'
+        },
+        xAxis: {
+            categories: Object.keys(averageCountJson)
+        },
+        yAxis: {
+            title: {
+                text: 'Age'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Average Age',
+            data: values
         }]
     });
 }

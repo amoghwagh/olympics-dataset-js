@@ -2,7 +2,7 @@
 1) Number of times olympics hosted per city over the NOCs - Piechart
 2) Top 10 countries who have won most medals after 2000 - stacked column - split gold/silver/bronze
 3) M/F participation by decade - column chart
-4) Per season average age of athletes who participated in Boxing Men’s Heavyweight - Line
+4) Per season average age of athletes who participated in Boxing Men's Heavyweight - Line
 5) Find out all medal winners from India per season - Table
 */
 let fs = require('fs')
@@ -99,19 +99,37 @@ function NumberOfParticipants (athletesJSON) {
     }
     return participantsJson
 
-    // let series = Object.keys(participantsJson)
-    // let seriesData = 0;
-    // let maleData = [];
-    // let femaleData = [];
-    // for(let decade in participantsJson) {
-    //         maleData.push(participantsJson[decade]["M"])
-    //         femaleData.push(participantsJson[decade]["F"])
-    // }
+}
 
+function averageAgeBoxing (athletesJSON) {
+    let totalCountJson = athletesJSON.reduce( (countJson,event) => {
+    if(event["Event"] == "Boxing Men's Heavyweight" && event["Age"] != "" && (event["Age"]) !=  "NA" ) {
+        if(countJson[event["Year"]]) {
+            countJson[event["Year"]]["totalAge"] += parseInt(event["Age"])
+            countJson[event["Year"]]["totalCount"]++;
+        }
+        else
+        {  
+            countJson[event["Year"]] = {}
+            countJson[event["Year"]]["totalAge"] = parseInt(event["Age"])
+            countJson[event["Year"]]["totalCount"] = 1; 
+        }
+    }
+    return countJson
+    },{})
+    
+    for(let year of Object.keys(totalCountJson)) {
+        totalCountJson[year]["average"] = totalCountJson[year]["totalAge"] / totalCountJson[year]["totalCount"];
+        totalCountJson[year]["average"] = totalCountJson[year]["average"].toPrecision(4)
+        delete totalCountJson[year]["totalAge"]
+        delete totalCountJson[year]["totalCount"]
+    }
+    return totalCountJson
 }
 
 module.exports = {
     NumberOfCities : NumberOfCities,
     topCountries: topCountries,
-    NumberOfParticipants: NumberOfParticipants
+    NumberOfParticipants: NumberOfParticipants,
+    averageAgeBoxing : averageAgeBoxing
 } 
