@@ -1,15 +1,14 @@
-
-function csvToJson(csvFilePath) {      //Converts CSV to JSON
-    const csv = require('csvtojson')
-    return new Promise( (resolve,reject) => {
+function csvToJson(csvFilePath) { //Converts CSV to JSON
+  const csv = require('csvtojson')
+  return new Promise((resolve, reject) => { // New Wrapper is created 
     csv().fromFile(csvFilePath)
-    .then((jsonObj)=>{
+      .then((jsonObj) => {
         resolve(jsonObj)
-    })
-    .error((err) => {
+      })
+      .error((err) => {
         reject(err)
-    })
-})
+      })
+  })
 }
 
-module.exports = csvToJson;     //Module is Exported 
+module.exports = csvToJson; //Module is Exported 
