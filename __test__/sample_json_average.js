@@ -31,6 +31,22 @@ let athlete_json = [{
     Sport: 'Boxing',
     Event: "Boxing Men's Heavyweight",
     Medal: 'NA'
+  },{
+    ID: '133538',
+    Name: 'Yushan Nijiati',
+    Sex: 'M',
+    Age: 'NA',
+    Height: '188',
+    Weight: '91',
+    Team: 'China',
+    NOC: 'CHN',
+    Games: '2008 Summer',
+    Year: '2008',
+    Season: 'Summer',
+    City: 'Beijing',
+    Sport: 'Boxing',
+    Event: "Boxing Men's Heavyweight",
+    Medal: 'NA'
   },
   {
     ID: '134137',

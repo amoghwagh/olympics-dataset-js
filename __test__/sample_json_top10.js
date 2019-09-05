@@ -14,7 +14,7 @@ let athlete_json = [
     City: 'London',
     Sport: 'Art Competitions',
     Event: 'Art Competitions Mixed Sculpturing, Unknown Event',
-    Medal: 'Gold'
+    Medal: 'Bronze'
   },
   {
     ID: '20',
@@ -371,7 +371,7 @@ let noc_json = [
 let expected_output = {
   'Norway': { Gold: 3, Bronze: 2, Silver: 2 },
   'Greece': { Gold: 2, Bronze: 0, Silver: 1 },
-  'Finland': { Gold: 1, Bronze: 1, Silver: 0 }
+  'Finland': { Gold: 0, Bronze: 2, Silver: 0 }
 }
 
 module.exports = {

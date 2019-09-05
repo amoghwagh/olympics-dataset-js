@@ -97,7 +97,7 @@ function NumberOfParticipants (athletesJSON) {
 
 function averageAgeBoxing (athletesJSON) {
     let totalCountJson = athletesJSON.reduce( (countJson,event) => {
-    if(event["Event"] == "Boxing Men's Heavyweight" && event["Age"] != "" && (event["Age"]) !=  "NA" ) {
+    if(event["Event"] == "Boxing Men's Heavyweight" && (event["Age"]) !=  "NA" ) {
         if(countJson[event["Year"]]) {
             countJson[event["Year"]]["totalAge"] += parseInt(event["Age"])
             countJson[event["Year"]]["totalCount"]++;

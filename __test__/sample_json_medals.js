@@ -1,4 +1,21 @@
 let athlete_json = [{
+  ID: '111257',
+  Name: 'Surinder Singh',
+  Sex: 'M',
+  Age: '23',
+  Height: '178',
+  Weight: '83',
+  Team: 'India',
+  NOC: 'IND',
+  Games: '1980 Summer',
+  Year: '1980',
+  Season: 'Summer',
+  City: 'Moskva',
+  Sport: 'Hockey',
+  Event: "Hockey Men's Hockey",
+  Medal: 'NA'
+},
+  {
     ID: '111257',
     Name: 'Surinder Singh Sodhi Shokar',
     Sex: 'M',
