@@ -76,7 +76,7 @@ function NumberOfParticipants (athletesJSON) {
 
     let reducedJson = athletesJSON.reduce( (byYear,event) =>{
             let determiner = String(parseInt((event["Year"] / 10)))
-                byYear[determiner][event["Sex"]].add(event["Name"])
+            byYear[determiner][event["Sex"]].add(event["Name"])
         return byYear;
     },decadeObjArray[0])
     

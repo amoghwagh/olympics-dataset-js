@@ -14,4 +14,3 @@ csvToJsonFunc('./Dataset/athlete_events.csv').then((athlete_events) => {
                 fs.writeFileSync('./public/data.json',JSON.stringify(jsonData,null,2))      
         })
 })
-
