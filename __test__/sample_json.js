@@ -100,6 +100,23 @@ let athlete_json = [{
     Event: "Athletics Men's 1,500 metres",
     Medal: 'NA'
   },
+  {
+    ID: '34',
+    Name: 'Aditya Dhiman',
+    Sex: 'M',
+    Age: '30',
+    Height: '187',
+    Weight: '76',
+    Team: 'France',
+    NOC: 'FRA',
+    Games: '2012 Summer',
+    Year: '2012',
+    Season: 'Summer',
+    City: 'London',
+    Sport: 'Athletics',
+    Event: "Athletics Men's 1,500 metres",
+    Medal: 'NA'
+  }
   ]
 
 let expected_output = {

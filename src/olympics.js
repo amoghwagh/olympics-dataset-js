@@ -39,8 +39,7 @@ function topCountries (eventsJson,nocJson,number) {
     },{})
 
     let topNoc = Object.values(noc).sort( (a,b) =>b["totalMedals"] - a["totalMedals"]).slice(0,number);
-    let countryToRegionMap = new Map();
-
+    var countryToRegionMap = new Map();
     for (let nocMapping of nocJson ) {
         countryToRegionMap.set(nocMapping["NOC"],nocMapping["region"])
     }
@@ -76,13 +75,8 @@ function NumberOfParticipants (athletesJSON) {
     }) 
 
     let reducedJson = athletesJSON.reduce( (byYear,event) =>{
-        if(event["Year"]) {
             let determiner = String(parseInt((event["Year"] / 10)))
-            if(byYear[determiner])
-            {
                 byYear[determiner][event["Sex"]].add(event["Name"])
-            }      
-        }
         return byYear;
     },decadeObjArray[0])
     
@@ -127,9 +121,31 @@ function averageAgeBoxing (athletesJSON) {
     return totalCountJson
 }
 
+function medalWinners (athletesJSON) {
+    let medalJson = athletesJSON.reduce( (medalCount, event) => {
+        if(event["Medal"]!="NA" && event["NOC"] =="IND")
+        {
+            if(medalCount[event["Year"]]) {
+                medalCount[event["Year"]].add(event["Name"])
+            }
+            else
+            {
+                medalCount[event["Year"]] = new Set();
+                medalCount[event["Year"]].add(event["Name"])
+            }
+        }
+        return medalCount
+    },{})
+    for(let year in medalJson) {
+        medalJson[year] = Array.from(medalJson[year])
+    }
+    return medalJson
+}
+
 module.exports = {
     NumberOfCities : NumberOfCities,
     topCountries: topCountries,
     NumberOfParticipants: NumberOfParticipants,
-    averageAgeBoxing : averageAgeBoxing
+    averageAgeBoxing : averageAgeBoxing,
+    medalWinners : medalWinners
 } 

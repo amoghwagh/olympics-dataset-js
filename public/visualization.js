@@ -7,7 +7,6 @@
         averageAgeChart(data["averageAgeBoxing"])
     })
 
-
 function numberOfTimesHostedChart(cityCountObj) {
 
      let cityCountViz = [];

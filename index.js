@@ -10,6 +10,7 @@ csvToJsonFunc('./Dataset/athlete_events.csv').then((athlete_events) => {
                 jsonData["topCountries"] = Olympics.topCountries(athlete_events,noc_regions,10)
                 jsonData["numberOfParticipants"] = Olympics.NumberOfParticipants(athlete_events)
                 jsonData["averageAgeBoxing"] = Olympics.averageAgeBoxing(athlete_events)
+                jsonData["medalWinners"] = Olympics.medalWinners(athlete_events)
                 fs.writeFileSync('./public/data.json',JSON.stringify(jsonData,null,2))      
         })
 })

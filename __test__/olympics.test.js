@@ -5,10 +5,12 @@ let athlete_events_json = require('./sample_json.js')
 let athlete_events_json_top = require('./sample_json_top10.js')
 let athlete_events_json_participants = require('./sample_json_participants.js')
 let athlete_events_json_average = require('./sample_json_average.js')
+let athlete_events_json_medals = require('./sample_json_medals.js')
 let numberOfCitiesFunc = Olympics.NumberOfCities;
 let topCountries = Olympics.topCountries;
 let numberOfParticipants = Olympics.NumberOfParticipants
 let averageAgeBoxing = Olympics.averageAgeBoxing
+let medalWinners = Olympics.medalWinners
 
 describe("Olympics Project Tests", () => {
   describe("Number of times Olympics was hosted per city over the years", ()=>{ 
@@ -57,6 +59,18 @@ describe("Olympics Project Tests", () => {
     })
     test("Expected Output", () => {
       expect(averageAgeBoxing(athlete_events_json_average.athlete_json)).toEqual(athlete_events_json_average.expected_output)
+    })
+  })
+  describe("Total Medal Winners from India per season", ()=>{ 
+    test("Should be defined", ()=> {
+        expect(medalWinners).toBeDefined();
+    })
+    test("Should be an Object", () => {
+      expect(typeof medalWinners(athlete_events_json_medals.athlete_json)).toEqual("object")
+
+    })
+    test("Expected Output", () => {
+      expect(medalWinners(athlete_events_json_medals.athlete_json)).toEqual(athlete_events_json_medals.expected_output)
     })
   })
 })
