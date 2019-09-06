@@ -8,9 +8,9 @@
       })
 
     function numberOfTimesHostedChart(cityCountObj) {
-      let cityCountViz = [];
+      const cityCountViz = [];
       for (let key in cityCountObj) { //City count Object is created for visualization
-        let oneViz = {}
+        const oneViz = {}
         oneViz["name"] = key;
         oneViz["y"] = cityCountObj[key];
         cityCountViz.push(oneViz);
@@ -48,12 +48,12 @@
     }
 
     function topCountriesChart(topCountries) {
-      let medalsArray = new Array(3).fill(0); //Empty array is created filled with 3 zero's each
-      for (let medals in medalsArray) {
+      const medalsArray = new Array(3).fill(0); //Empty array is created filled with 3 zero's each
+      for (const medals in medalsArray) {
         medalsArray[medals] = new Array();
       }
 
-      for (let country in topCountries) { //Each country is pushed into an array
+      for (const country in topCountries) { //Each country is pushed into an array
         medalsArray[0].push(topCountries[country]["Gold"])
         medalsArray[1].push(topCountries[country]["Silver"])
         medalsArray[2].push(topCountries[country]["Bronze"])
@@ -122,10 +122,9 @@
     }
 
     function participantsChart(participantsJson) {
-      let seriesData = 0;
-      let maleData = [];
-      let femaleData = [];
-      for (let decade in participantsJson) { //Male and Female Data of each Decade is pushed into an array
+      const maleData = [];
+      const femaleData = [];
+      for (const decade in participantsJson) { //Male and Female Data of each Decade is pushed into an array
         maleData.push(participantsJson[decade]["M"])
         femaleData.push(participantsJson[decade]["F"])
       }
@@ -176,12 +175,10 @@
     }
 
     function averageAgeChart(averageCountJson) {
-      let values = [];
-      for (year of Object.keys(averageCountJson)) {
+      const values = [];
+      for (const year of Object.keys(averageCountJson)) {
         values.push(parseFloat(averageCountJson[year]["average"])) //Parsed into a float value and pushed into 'values' array
       }
-      console.log(values)
-      console.log(Object.values(averageCountJson))
       Highcharts.chart('averageAge', {
         chart: {
           type: 'line'

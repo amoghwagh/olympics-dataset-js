@@ -8,6 +8,7 @@
   csvToJsonFunc('./Dataset/athlete_events.csv').then((athlete_events) => {
     csvToJsonFunc('./Dataset/noc_regions.csv').then((noc_regions) => {
       let jsonData = {} //Empty Json object is assigned and later populated with outputs from each function
+      
       jsonData["NumberOfCities"] = Olympics.NumberOfCities(athlete_events)
       jsonData["topCountries"] = Olympics.topCountries(athlete_events, noc_regions, 10)
       jsonData["numberOfParticipants"] = Olympics.NumberOfParticipants(athlete_events)

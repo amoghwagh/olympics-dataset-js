@@ -5,10 +5,10 @@ fetch('./data.json') //Data is fetched from data.json File
     })
 
 function createTable(medalWinnersJson) { //A table is created and rows are dynamically alloted based on the number of years present
-    let table = document.getElementById("medalTable");
-    let yearKeys = Object.keys(medalWinnersJson)
+    const table = document.getElementById("medalTable");
+    const yearKeys = Object.keys(medalWinnersJson)
     let rowCount = 0;
-    for(let year in medalWinnersJson) {
+    for(const year in medalWinnersJson) {
         let row = table.insertRow(rowCount+1) // New Row is created
         let yearCell = row.insertCell(0) //New cell is created at position 0
         let nameCell = row.insertCell(1) //New cell is created at position 1

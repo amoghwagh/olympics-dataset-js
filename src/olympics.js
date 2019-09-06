@@ -5,13 +5,11 @@
 4) Per season average age of athletes who participated in Boxing Men's Heavyweight - Line
 5) Find out all medal winners from India per season - Table
 */
-let fs = require('fs')
 
 // Number of times olympics hosted per city over the NOCs - Piechart
 function NumberOfCities(athletesJSON) {
-  let gamesSet = new Set(); // New Set is Defined for Each Game
-  let cityCountViz = []
-  let cityCountObj = athletesJSON.reduce((acc, event) => { //Counts the number of times olympics was held in each city
+  const gamesSet = new Set(); // New Set is Defined for Each Game
+  const cityCountObj = athletesJSON.reduce((acc, event) => { //Counts the number of times olympics was held in each city
     if (!(gamesSet.has(event["Games"]))) {
       gamesSet.add(event["Games"]);
       (acc[event["City"]]) ? acc[event["City"]]++: acc[event["City"]] = 1; //Count for Each City is increased based on Games Set
@@ -24,13 +22,14 @@ function NumberOfCities(athletesJSON) {
 
 // Top 10 countries who have won most medals after 2000 - stacked column - split gold/silver/bronze
 function topCountries(eventsJson, nocJson, number) {
-  let noc = eventsJson.reduce((acc, event) => {
+  const noc = eventsJson.reduce((acc, event) => {
     if (event["Year"] > 2000 && event["Medal"] != 'NA') { //Checks if year>2000 and if the athlete has won a medal
       if (acc[event["NOC"]]) { //If NOC is present then medal count is increased based on the type of medal won
         (acc[event["NOC"]][event["Medal"]]) ? acc[event["NOC"]][event["Medal"]]++: acc[event["NOC"]][event["Medal"]] = 1;
         acc[event["NOC"]]["totalMedals"]++
       } else //If not, new NOC is created with medal count set to one
-        (acc[event["NOC"]]) = {
+        (
+          acc[event["NOC"]]) = {
           [event["Medal"]]: 1,
           totalMedals: 1,
           key: event["NOC"]
@@ -39,8 +38,8 @@ function topCountries(eventsJson, nocJson, number) {
     return acc;
   }, {})
 
-  let topNoc = Object.values(noc).sort((a, b) => b["totalMedals"] - a["totalMedals"]).slice(0, number); //Sort NOC based on total Medals received
-  var countryToRegionMap = new Map(); // Create a Map of NOC -> Region
+  const topNoc = Object.values(noc).sort((a, b) => b["totalMedals"] - a["totalMedals"]).slice(0, number); //Sort NOC based on total Medals received
+  const countryToRegionMap = new Map(); // Create a Map of NOC -> Region
   for (let nocMapping of nocJson) {
     countryToRegionMap.set(nocMapping["NOC"], nocMapping["region"]) //Replace each NOC with their region
   }
@@ -57,13 +56,13 @@ function topCountries(eventsJson, nocJson, number) {
 
 //M/F participation by decade 
 function NumberOfParticipants(athletesJSON) {
-  let currentYear = new Date().getFullYear(); // Get current Year from your computer
-  let numberOfDecades = Math.ceil((currentYear - 1890) / 10); //Get number of Decades based on the current Year 
-  var startDecade = 189; //Decade starting from 1890
+  const currentYear = new Date().getFullYear(); // Get current Year from your computer
+  const numberOfDecades = Math.ceil((currentYear - 1890) / 10); //Get number of Decades based on the current Year 
   let decadeObjArray = new Array(1).fill(undefined)
+  let startDecade = 189; //Decade starting from 1890
 
   decadeObjArray = decadeObjArray.map(Object).map((ele) => { //Multiple buckets of different decades are created with Male and Female Keys assigned to 0
-    iteration = 0;
+    let iteration = 0;
     while (iteration < numberOfDecades) {
       ele[startDecade] = {
         "M": new Set(),
@@ -76,14 +75,14 @@ function NumberOfParticipants(athletesJSON) {
   })
 
   let reducedJson = athletesJSON.reduce((byYear, event) => { //The Json is parsed the total number of unique male and female athletes are found
-    let determiner = String(parseInt((event["Year"] / 10)))
+    const determiner = String(parseInt((event["Year"] / 10)))
     byYear[determiner][event["Sex"]].add(event["Name"])
     return byYear;
   }, decadeObjArray[0])
 
-  let participantsJson = {}
+  const participantsJson = {}
 
-  for (let year of Object.keys(reducedJson)) { //The Male and Female Sets are replaced with their lengths for count
+  for (const year of Object.keys(reducedJson)) { //The Male and Female Sets are replaced with their lengths for count
     reducedJson[year]["M"] = reducedJson[year]["M"].size;
     reducedJson[year]["F"] = reducedJson[year]["F"].size;
     let lowerIndex = parseInt(year) * 10;
@@ -98,7 +97,7 @@ function NumberOfParticipants(athletesJSON) {
 
 // Per season average age of athletes who participated in Boxing Men's Heavyweight
 function averageAgeBoxing(athletesJSON) {
-  let totalCountJson = athletesJSON.reduce((countJson, event) => { //JSON is parsed to find the total Age and total number of athletes
+  const totalCountJson = athletesJSON.reduce((countJson, event) => { //JSON is parsed to find the total Age and total number of athletes
     if (event["Event"] == "Boxing Men's Heavyweight" && (event["Age"]) != "NA") {
       if (countJson[event["Year"]]) {
         countJson[event["Year"]]["totalAge"] += parseInt(event["Age"])
@@ -112,7 +111,7 @@ function averageAgeBoxing(athletesJSON) {
     return countJson
   }, {})
 
-  for (let year of Object.keys(totalCountJson)) { //Average is found out with the use of total age and count
+  for (const year of Object.keys(totalCountJson)) { //Average is found out with the use of total age and count
     totalCountJson[year]["average"] = totalCountJson[year]["totalAge"] / totalCountJson[year]["totalCount"];
     totalCountJson[year]["average"] = totalCountJson[year]["average"].toPrecision(4) //Average is found
     delete totalCountJson[year]["totalAge"] //Total Age property is removed
@@ -123,7 +122,7 @@ function averageAgeBoxing(athletesJSON) {
 
 //Find out all medal winners from India per season 
 function medalWinners(athletesJSON) { 
-  let medalJson = athletesJSON.reduce((medalCount, event) => {
+  const medalJson = athletesJSON.reduce((medalCount, event) => {
     if (event["Medal"] != "NA" && event["NOC"] == "IND") { // Checks if athlete has won the medal and if he belongs from INDIA
       if (medalCount[event["Year"]]) {
         medalCount[event["Year"]].add(event["Name"]) //The Year is added with their respective names as values in the Set
@@ -134,7 +133,7 @@ function medalWinners(athletesJSON) {
     }
     return medalCount
   }, {})
-  for (let year in medalJson) {
+  for (const year in medalJson) {
     medalJson[year] = Array.from(medalJson[year]) //The Set is converted to an Array before sending it as JSON
   }
   return medalJson
