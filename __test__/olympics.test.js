@@ -14,70 +14,67 @@ let medalWinners = Olympics.medalWinners
 
 
 //Test Suites
-describe("Olympics Project Tests", () => {
-
-  describe("Number of times Olympics was hosted per city over the years", () => {
-    test("Should be defined", () => {
-      expect(numberOfCitiesFunc).toBeDefined();
-    })
-    test("Should be an Object", () => {
-      expect(typeof numberOfCitiesFunc(athlete_events_json.athlete_json)).toEqual("object")
-
-    })
-    test("Expected Output", () => {
-      expect(numberOfCitiesFunc(athlete_events_json.athlete_json)).toEqual(athlete_events_json.expected_output)
-    })
+describe("Number of times Olympics was hosted per city over the years", () => {
+  test("Should be defined", () => {
+    expect(numberOfCitiesFunc).toBeDefined();
   })
+  test("Should be an Object", () => {
+    expect(typeof numberOfCitiesFunc(athlete_events_json.athlete_json)).toEqual("object")
 
-  describe("Top 3 countries who have won most medals after 2000 - split gold/silver/bronze", () => {
-    test("Should be defined", () => {
-      expect(topCountries).toBeDefined();
-    })
-    test("Should be an Object", () => {
-      expect(typeof topCountries(athlete_events_json_top.athlete_json, athlete_events_json_top.noc_json, 3)).toEqual("object")
-
-    })
-    test("Expected Output", () => {
-      expect(topCountries(athlete_events_json_top.athlete_json, athlete_events_json_top.noc_json, 3)).toEqual(athlete_events_json_top.expected_output)
-    })
   })
-
-  describe("Male and Female Participation by Decade", () => {
-    test("Should be defined", () => {
-      expect(numberOfParticipants).toBeDefined();
-    })
-    test("Should be an Object", () => {
-      expect(typeof numberOfParticipants(athlete_events_json_participants.athlete_json)).toEqual("object")
-
-    })
-    test("Expected Output", () => {
-      expect(numberOfParticipants(athlete_events_json_participants.athlete_json, )).toEqual(athlete_events_json_participants.expected_output)
-    })
+  test("Expected Output", () => {
+    expect(numberOfCitiesFunc(athlete_events_json.athlete_json)).toEqual(athlete_events_json.expected_output)
   })
+})
 
-  describe("Average age of athletes who participated in Boxing Men's Heavyweight", () => {
-    test("Should be defined", () => {
-      expect(averageAgeBoxing).toBeDefined();
-    })
-    test("Should be an Object", () => {
-      expect(typeof averageAgeBoxing(athlete_events_json_average.athlete_json)).toEqual("object")
-
-    })
-    test("Expected Output", () => {
-      expect(averageAgeBoxing(athlete_events_json_average.athlete_json)).toEqual(athlete_events_json_average.expected_output)
-    })
+describe("Top 3 countries who have won most medals after 2000 - split gold/silver/bronze", () => {
+  test("Should be defined", () => {
+    expect(topCountries).toBeDefined();
   })
-  
-  describe("Total Medal Winners from India per season", () => {
-    test("Should be defined", () => {
-      expect(medalWinners).toBeDefined();
-    })
-    test("Should be an Object", () => {
-      expect(typeof medalWinners(athlete_events_json_medals.athlete_json)).toEqual("object")
+  test("Should be an Object", () => {
+    expect(typeof topCountries(athlete_events_json_top.athlete_json, athlete_events_json_top.noc_json, 3)).toEqual("object")
 
-    })
-    test("Expected Output", () => {
-      expect(medalWinners(athlete_events_json_medals.athlete_json)).toEqual(athlete_events_json_medals.expected_output)
-    })
+  })
+  test("Expected Output", () => {
+    expect(topCountries(athlete_events_json_top.athlete_json, athlete_events_json_top.noc_json, 3)).toEqual(athlete_events_json_top.expected_output)
+  })
+})
+
+describe("Male and Female Participation by Decade", () => {
+  test("Should be defined", () => {
+    expect(numberOfParticipants).toBeDefined();
+  })
+  test("Should be an Object", () => {
+    expect(typeof numberOfParticipants(athlete_events_json_participants.athlete_json)).toEqual("object")
+
+  })
+  test("Expected Output", () => {
+    expect(numberOfParticipants(athlete_events_json_participants.athlete_json, )).toEqual(athlete_events_json_participants.expected_output)
+  })
+})
+
+describe("Average age of athletes who participated in Boxing Men's Heavyweight", () => {
+  test("Should be defined", () => {
+    expect(averageAgeBoxing).toBeDefined();
+  })
+  test("Should be an Object", () => {
+    expect(typeof averageAgeBoxing(athlete_events_json_average.athlete_json)).toEqual("object")
+
+  })
+  test("Expected Output", () => {
+    expect(averageAgeBoxing(athlete_events_json_average.athlete_json)).toEqual(athlete_events_json_average.expected_output)
+  })
+})
+
+describe("Total Medal Winners from India per season", () => {
+  test("Should be defined", () => {
+    expect(medalWinners).toBeDefined();
+  })
+  test("Should be an Object", () => {
+    expect(typeof medalWinners(athlete_events_json_medals.athlete_json)).toEqual("object")
+
+  })
+  test("Expected Output", () => {
+    expect(medalWinners(athlete_events_json_medals.athlete_json)).toEqual(athlete_events_json_medals.expected_output)
   })
 })
