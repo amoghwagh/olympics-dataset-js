@@ -140,10 +140,9 @@ function medalWinners(athletesJSON) {
     }
     return medalCount;
   }, {});
-  for (const year of Object.keys(medalJson)) {
-    medalJson[year] = Array.from(medalJson[year]); //  The Set is converted to an Array before sending it as JSON
-  }
-  return medalJson;
+
+  const medalWinnersJson = myObjectMap(medalJson,(year) => Array.from(year)) //  The Set is converted to an Array before sending it as JSON
+  return medalWinnersJson;
 }
 
 module.exports = { // All the functions are exported
