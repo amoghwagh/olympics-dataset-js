@@ -86,12 +86,17 @@ function numberOfParticipants(athletesJSON) {
     return byYear;
   }, {});
    
-     myObjectMap(decadeJson, (eachDecade) => 
-     eachDecade = myObjectMap(eachDecade, (eachSet) => 
-      eachSet.size
-      ));
+  const finalDecadeJson = myObjectMap(decadeJson, (eachDecade) => {
+    const decadeObj = myObjectMap(eachDecade, (eachSet) => {
+      const setSizeObj = eachSet.size;
+      return setSizeObj;
+    }
+   )
+   return decadeObj;
+  }
+  );
 
-  return decadeJson;
+  return finalDecadeJson;
 }
 
 // Per season average age of athletes who participated in Boxing Men's Heavyweight
@@ -101,7 +106,8 @@ function averageAgeBoxing(athletesJSON) {
       if (countJson[event.Year]) {
         countJson[event.Year].totalAge += parseInt(event.Age);
         countJson[event.Year].totalCount += 1;
-      } else {
+      } 
+      else {
         countJson[event.Year] = {}; //  Empty object is created
         countJson[event.Year].totalAge = parseInt(event.Age);
         countJson[event.Year].totalCount = 1;
@@ -110,13 +116,15 @@ function averageAgeBoxing(athletesJSON) {
     return countJson;
   }, {});
   
-  for (const year of Object.keys(totalCountJson)) { //  Average is found out with the use of total age and count    
-    totalCountJson[year].average = totalCountJson[year].totalAge / totalCountJson[year].totalCount;
-    totalCountJson[year].average = totalCountJson[year].average.toPrecision(4); // Average is found
-    delete totalCountJson[year].totalAge; //  Total Age property is removed
-    delete totalCountJson[year].totalCount; //  Total Count property is removed
+  
+
+  const averageJson = myObjectMap(totalCountJson,(eachYear) =>  {
+      const yearJson = {}
+      yearJson["average"] = (eachYear.totalAge / eachYear.totalCount).toPrecision(4); //  Average is found out with the use of total age and count
+    return yearJson;
   }
-  return totalCountJson;
+  )
+  return averageJson;
 }
 
 //  Find out all medal winners from India per season
