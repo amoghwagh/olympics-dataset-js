@@ -118,12 +118,29 @@
     }
 
     function participantsChart(participantsJson) {
-      const maleData = [];
-      const femaleData = [];
-      for (const decade in participantsJson) { //Male and Female Data of each Decade is pushed into an array
-        maleData.push(participantsJson[decade]["M"])
-        femaleData.push(participantsJson[decade]["F"])
+
+      const sortedKeys = Object.keys(participantsJson).sort((a,b) => parseInt(a)-parseInt(b)) //  Sorts the JSON
+      console.log(sortedKeys);
+      const sortedJson = {}
+      for (key of sortedKeys) {
+        sortedJson[key] = Object.assign({},participantsJson[key]) // Deep Copies the JSON
       }
+
+      const seriesData = {} //  To convert to Series Data
+        myObjectMap(sortedJson, (decade) => {
+          const genders = Object.keys(decade);  //  Gets the Genders
+          for (gender of genders) {
+            if(seriesData[gender]) {
+              seriesData[gender].data.push(decade[gender]); // Pushes the value of Gender Type
+            }
+            else {  //  Otherwise creates an empty object and assigns name and data to it
+              seriesData[gender] = {};
+              seriesData[gender].name = gender;
+              seriesData[gender].data = [];
+              seriesData[gender].data.push(decade[gender]);
+            }
+          }
+        });
 
       Highcharts.chart('participants', {
         chart: {
@@ -136,7 +153,7 @@
           text: 'Source: Olympics.com'
         },
         xAxis: {
-          categories: Object.keys(participantsJson),
+          categories: Object.keys(sortedJson),
           crosshair: true
         },
         yAxis: {
@@ -159,14 +176,7 @@
             borderWidth: 0
           }
         },
-        series: [{
-          name: 'Male',
-          data: maleData
-
-        }, {
-          name: 'Female',
-          data: femaleData
-        }]
+        series: Object.values(seriesData)
       });
     }
 
