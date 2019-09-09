@@ -7,7 +7,7 @@
 */
 
 // Number of times olympics hosted per city over the NOCs - Piechart
-function NumberOfCities(athletesJSON) {
+function numberOfCities(athletesJSON) {
   const gamesSet = new Set(); // New Set is Defined for Each Game
   const cityCountObj = athletesJSON.reduce((acc, event) => { // Counts the number of times olympics was held in each city
     if (!(gamesSet.has(event.Games))) {
@@ -63,7 +63,7 @@ function topCountries(eventsJson, nocJson, number) {
 }
 
 //  M/F participation by decade
-function NumberOfParticipants(athletesJSON) {
+function numberOfParticipants(athletesJSON) {
   const currentYear = new Date().getFullYear(); // Get current Year from your computer
   const numberOfDecades = Math.ceil((currentYear - 1890) / 10); //  Get number of Decades based on the current Year
   let decadeObjArray = new Array(1).fill(undefined);
@@ -83,7 +83,7 @@ function NumberOfParticipants(athletesJSON) {
   });
 
   const reducedJson = athletesJSON.reduce((byYear, event) => { // The Json is parsed the total number of unique male and female athletes are found
-    const determiner = String(parseInt((event.Year / 10), 10));
+    const determiner = String(parseInt((event.Year / 10), 10)); // Takes first 3 digits 
     byYear[determiner][event.Sex].add(event.Name);
     return byYear;
   }, decadeObjArray[0]);
@@ -147,9 +147,9 @@ function medalWinners(athletesJSON) {
 }
 
 module.exports = { // All the functions are exported
-  NumberOfCities,
+  numberOfCities,
   topCountries,
-  NumberOfParticipants,
+  numberOfParticipants,
   averageAgeBoxing,
   medalWinners,
 };
