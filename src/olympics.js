@@ -5,8 +5,9 @@
 4) Per season average age of athletes who participated in Boxing Men's Heavyweight - Line
 5) Find out all medal winners from India per season - Table
 */
-
+// Import statements
 const utils = require('./utils.js')
+const myObjectMap = utils.myObjectMap;
 
 // Number of times olympics hosted per city over the NOCs - Piechart
 function numberOfCities(athletesJSON) {
@@ -65,7 +66,6 @@ function topCountries(eventsJson, nocJson, number) {
 }
 
 const convertToDecade = utils.convertToDecade;
-const myObjectMap = utils.myObjectMap;
 //  M/F participation by decade
 function numberOfParticipants(athletesJSON) {
   
@@ -86,9 +86,10 @@ function numberOfParticipants(athletesJSON) {
     return byYear;
   }, {});
    
-  for(const eachDecade of Object.keys(decadeJson)) {
-      decadeJson[eachDecade] = myObjectMap(decadeJson[eachDecade], (setValue)=> setValue.size)
-  } 
+     myObjectMap(decadeJson, (eachDecade) => 
+     eachDecade = myObjectMap(eachDecade, (eachSet) => 
+      eachSet.size
+      ));
 
   return decadeJson;
 }
@@ -108,8 +109,8 @@ function averageAgeBoxing(athletesJSON) {
     }
     return countJson;
   }, {});
-
-  for (const year of Object.keys(totalCountJson)) { //  Average is found out with the use of total age and count
+  
+  for (const year of Object.keys(totalCountJson)) { //  Average is found out with the use of total age and count    
     totalCountJson[year].average = totalCountJson[year].totalAge / totalCountJson[year].totalCount;
     totalCountJson[year].average = totalCountJson[year].average.toPrecision(4); // Average is found
     delete totalCountJson[year].totalAge; //  Total Age property is removed

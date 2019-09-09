@@ -6,11 +6,10 @@ function convertToDecade(threeDigitYear) {
 }
 
 function myObjectMap(curObj,appliedFunction) {
-    const obj = {};
     for(const key of Object.keys(curObj)) {
-            obj[key] = appliedFunction(curObj[key]);
+         curObj[key] = appliedFunction(curObj[key]);
     }
-    return obj;
+    return curObj;
 }
 
 module.exports = {
