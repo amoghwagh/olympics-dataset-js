@@ -1,11 +1,10 @@
-    fetch('./data.json') //Data is fetched from the data.json file
-      .then(r => r.json())
-      .then(data => {
-        numberOfTimesHostedChart(data["numberOfCities"])
-        topCountriesChart(data["topCountries"])
-        participantsChart(data["numberOfParticipants"])
-        averageAgeChart(data["averageAgeBoxing"])
-      })
+    function myObjectMap(curObj,appliedFunction) {
+      const obj = {}
+      for(const key of Object.keys(curObj)) {
+          obj[key] = appliedFunction(curObj[key]);
+      }
+      return obj;
+    }
 
     function numberOfTimesHostedChart(cityCountObj) {
       const cityCountViz = [];
@@ -48,16 +47,22 @@
     }
 
     function topCountriesChart(topCountries) {
-      const medalsArray = new Array(3).fill(0); //Empty array is created filled with 3 zero's each
-      for (const medals in medalsArray) {
-        medalsArray[medals] = new Array();
-      }
-
-      for (const country in topCountries) { //Each country is pushed into an array
-        medalsArray[0].push(topCountries[country]["Gold"])
-        medalsArray[1].push(topCountries[country]["Silver"])
-        medalsArray[2].push(topCountries[country]["Bronze"])
-      }
+      
+        const seriesData = {} //  To convert to Series Data
+        myObjectMap(topCountries, (country) => {
+          const medalTypes = Object.keys(country);  //  Gets the medal Types
+          for (medal of medalTypes) {
+            if(seriesData[medal]) {
+              seriesData[medal].data.push(country[medal]); // Pushes the value of Medal Type
+            }
+            else {  //  Otherwise creates an empty object and assigns name and data to it
+              seriesData[medal] = {};
+              seriesData[medal].name = medal;
+              seriesData[medal].data = [];
+              seriesData[medal].data.push(country[medal]);
+            }
+          }
+        })
 
       Highcharts.chart('topCountry', {
         chart: {
@@ -108,16 +113,7 @@
             }
           }
         },
-        series: [{
-          name: 'Gold',
-          data: medalsArray[0]
-        }, {
-          name: 'Silver',
-          data: medalsArray[1]
-        }, {
-          name: 'Bronze',
-          data: medalsArray[2]
-        }]
+        series: Object.values(seriesData)
       });
     }
 
@@ -211,3 +207,12 @@
         }]
       });
     }
+
+fetch('./data.json') //Data is fetched from the data.json file
+  .then(r => r.json())
+  .then(data => {
+    numberOfTimesHostedChart(data["numberOfCities"])
+    topCountriesChart(data["topCountries"])
+    participantsChart(data["numberOfParticipants"])
+    averageAgeChart(data["averageAgeBoxing"])
+  })

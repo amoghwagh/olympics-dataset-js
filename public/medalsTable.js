@@ -1,7 +1,6 @@
 function createTable(medalWinnersJson) { // A table is created and rows are dynamically alloted based on the number of years present
   const table = document.getElementById('medalTable');
   const yearKeys = Object.keys(medalWinnersJson);
-  console.log(yearKeys)
   let rowCount = 0;
   for (const year of Object.keys(medalWinnersJson)) {
     const row = table.insertRow(rowCount+1); // New Row is created
