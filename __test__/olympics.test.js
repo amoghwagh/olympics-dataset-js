@@ -1,14 +1,13 @@
 // Import statements
-let csvToJsonFunc = require('../src/csvtojson.js');
 let Olympics = require('../src/olympics.js')
 let athlete_events_json = require('./sample_json_host.js')
 let athlete_events_json_top = require('./sample_json_top10.js')
 let athlete_events_json_participants = require('./sample_json_participants.js')
 let athlete_events_json_average = require('./sample_json_average.js')
 let athlete_events_json_medals = require('./sample_json_medals.js')
-let numberOfCitiesFunc = Olympics.NumberOfCities;
+let numberOfCitiesFunc = Olympics.numberOfCities;
 let topCountries = Olympics.topCountries;
-let numberOfParticipants = Olympics.NumberOfParticipants
+let numberOfParticipants = Olympics.numberOfParticipants
 let averageAgeBoxing = Olympics.averageAgeBoxing
 let medalWinners = Olympics.medalWinners
 

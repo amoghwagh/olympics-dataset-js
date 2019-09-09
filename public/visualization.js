@@ -1,7 +1,7 @@
     fetch('./data.json') //Data is fetched from the data.json file
       .then(r => r.json())
       .then(data => {
-        numberOfTimesHostedChart(data["NumberOfCities"])
+        numberOfTimesHostedChart(data["numberOfCities"])
         topCountriesChart(data["topCountries"])
         participantsChart(data["numberOfParticipants"])
         averageAgeChart(data["averageAgeBoxing"])

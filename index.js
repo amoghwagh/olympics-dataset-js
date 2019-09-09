@@ -2,13 +2,12 @@
   const fs = require('fs')
   const Olympics = require('./src/olympics.js')
   const dataPath = './src/data.json'
-  const csv = require('csvtojson')
+  const csvToJson = require('csvtojson')
 
   //  CSV is converted to JSON 
-  csv('./Dataset/athlete_events.csv').then((athlete_events) => {
-    csv('./Dataset/noc_regions.csv').then((noc_regions) => {
+  csvToJson().fromFile('./dataset/athlete_events.csv').then((athlete_events) => {
+    csvToJson().fromFile('./dataset/noc_regions.csv').then((noc_regions) => {
       let jsonData = {} //Empty Json object is assigned and later populated with outputs from each function
-
       jsonData["numberOfCities"] = Olympics.numberOfCities(athlete_events)
       jsonData["topCountries"] = Olympics.topCountries(athlete_events, noc_regions, 10)
       jsonData["numberOfParticipants"] = Olympics.numberOfParticipants(athlete_events)

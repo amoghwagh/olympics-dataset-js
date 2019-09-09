@@ -6,6 +6,8 @@
 5) Find out all medal winners from India per season - Table
 */
 
+const utils = require('./utils.js')
+
 // Number of times olympics hosted per city over the NOCs - Piechart
 function numberOfCities(athletesJSON) {
   const gamesSet = new Set(); // New Set is Defined for Each Game
@@ -62,44 +64,33 @@ function topCountries(eventsJson, nocJson, number) {
   return topCountries;
 }
 
+const convertToDecade = utils.convertToDecade;
+const myObjectMap = utils.myObjectMap;
 //  M/F participation by decade
 function numberOfParticipants(athletesJSON) {
-  const currentYear = new Date().getFullYear(); // Get current Year from your computer
-  const numberOfDecades = Math.ceil((currentYear - 1890) / 10); //  Get number of Decades based on the current Year
-  let decadeObjArray = new Array(1).fill(undefined);
-  let startDecade = 189; // Decade starting from 1890
-
-  decadeObjArray = decadeObjArray.map(Object).map((ele) => { // Multiple buckets of different decades are created with Male and Female Keys assigned to 0
-    let iteration = 0;
-    while (iteration < numberOfDecades) {
-      ele[startDecade] = {
-        M: new Set(),
-        F: new Set(),
-      };
-      startDecade += 1;
-      iteration += 1;
+  
+  const decadeJson = athletesJSON.reduce((byYear, event) => { // The Json is parsed the total number of unique male and female athletes are found
+    const decade = convertToDecade(String(parseInt((event.Year / 10), 10))); // Takes first 3 digits 
+    
+    if(byYear[decade])
+    {{
+        byYear[decade][event['Sex']].add(event['Name']); // Adds name to the decade
+      }
     }
-    return ele;
-  });
-
-  const reducedJson = athletesJSON.reduce((byYear, event) => { // The Json is parsed the total number of unique male and female athletes are found
-    const determiner = String(parseInt((event.Year / 10), 10)); // Takes first 3 digits 
-    byYear[determiner][event.Sex].add(event.Name);
+    else { 
+      byYear[decade] = {};
+      byYear[decade]['M'] = new Set ();
+      byYear[decade]['F'] = new Set ();
+      byYear[decade][event['Sex']].add(event['Name']); // Adds name to the decade
+    }
     return byYear;
-  }, decadeObjArray[0]);
+  }, {});
+   
+  for(const eachDecade of Object.keys(decadeJson)) {
+      decadeJson[eachDecade] = myObjectMap(decadeJson[eachDecade], (setValue)=> setValue.size)
+  } 
 
-  const participantsJson = {};
-
-  for (const year of Object.keys(reducedJson)) { // The Male and Female Sets are replaced with their lengths for count
-    reducedJson[year].M = reducedJson[year].M.size;
-    reducedJson[year].F = reducedJson[year].F.size;
-    const lowerIndex = parseInt(year) * 10;
-    const higherIndex = ((parseInt(year) + 1) * 10 - 1);
-    const newKey = String(lowerIndex).concat('-').concat(higherIndex);
-
-    participantsJson[newKey] = Object.assign({}, reducedJson[year]); //  For each key a copy of the decade object is assigned
-  }
-  return participantsJson;
+  return decadeJson;
 }
 
 // Per season average age of athletes who participated in Boxing Men's Heavyweight
