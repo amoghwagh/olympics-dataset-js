@@ -120,13 +120,12 @@
     function participantsChart(participantsJson) {
 
       const sortedKeys = Object.keys(participantsJson).sort((a,b) => parseInt(a)-parseInt(b)) //  Sorts the JSON
-      console.log(sortedKeys);
       const sortedJson = {}
       for (key of sortedKeys) {
         sortedJson[key] = Object.assign({},participantsJson[key]) // Deep Copies the JSON
       }
 
-      const seriesData = {} //  To convert to Series Data
+      let seriesData = {} //  To convert to Series Data
         myObjectMap(sortedJson, (decade) => {
           const genders = Object.keys(decade);  //  Gets the Genders
           for (gender of genders) {
@@ -181,41 +180,49 @@
     }
 
     function averageAgeChart(averageCountJson) {
-      const values = [];
-      for (const year of Object.keys(averageCountJson)) {
-        values.push(parseFloat(averageCountJson[year]["average"])) //Parsed into a float value and pushed into 'values' array
-      }
-      Highcharts.chart('averageAge', {
-        chart: {
-          type: 'line'
-        },
-        title: {
-          text: 'Average age per season of athletes who participated in Boxing Men\'s Heavyweight'
-        },
-        subtitle: {
-          text: 'Source: Olympics.com'
-        },
-        xAxis: {
-          categories: Object.keys(averageCountJson)
-        },
-        yAxis: {
+      const seriesData = {} //  To convert to Series Data
+          myObjectMap(averageCountJson, (year) => {
+          const average = Object.keys(year)[0];  //  Gets the name average
+            if(seriesData[average]) {
+              seriesData[average].data.push(parseFloat(year[average])); // Pushes the value of Average
+            }
+            else {  //  Otherwise creates an empty object and assigns name and data to it
+              seriesData[average] = {}
+              seriesData[average].name = average;
+              seriesData[average].data = [];
+              seriesData[average].data.push(parseFloat(year[average]));
+            }
+        });
+        console.log(Object.values(seriesData))
+      
+        Highcharts.chart('averageAge', {
+          chart: {
+            type: 'line'
+          },
           title: {
-            text: 'Age'
-          }
-        },
-        plotOptions: {
-          line: {
-            dataLabels: {
-              enabled: true
-            },
-            enableMouseTracking: false
-          }
-        },
-        series: [{
-          name: 'Average Age',
-          data: values
-        }]
-      });
+            text: 'Average age per season of athletes who participated in Boxing Men\'s Heavyweight'
+          },
+          subtitle: {
+            text: 'Source: Olympics.com'
+          },
+          xAxis: {
+            categories: Object.keys(averageCountJson)
+          },
+          yAxis: {
+            title: {
+              text: 'Age'
+            }
+          },
+          plotOptions: {
+            line: {
+              dataLabels: {
+                enabled: true
+              },
+              enableMouseTracking: false
+            }
+          },
+          series: Object.values(seriesData)
+        });  
     }
 
 fetch('./data.json') //Data is fetched from the data.json file
