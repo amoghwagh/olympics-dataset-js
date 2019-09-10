@@ -1,12 +1,4 @@
 /* eslint-disable no-undef */
-function myObjectMap(curObj, appliedFunction) {
-  const obj = {};
-  const curObjKeys = Object.keys(curObj);
-  curObjKeys.map(eachKey => {
-    obj[eachKey] = appliedFunction(curObj[eachKey]);
-  });
-  return obj;
-}
 
 function numberOfTimesHostedChart(cityCountObj) {
   const Countries = Object.keys(cityCountObj);
@@ -50,32 +42,25 @@ function numberOfTimesHostedChart(cityCountObj) {
   });
 }
 
-function topCountriesChart(topCountries) {
-  const seriesData = {}; //  To convert to Series Data
-  myObjectMap(topCountries, country => {
-    const medalTypes = Object.keys(country); //  Gets the medal Types
-    for (medal of medalTypes) {
-      if (seriesData[medal]) {
-        seriesData[medal].data.push(country[medal]); // Pushes the value of Medal Type
-      } else {
-        //  Otherwise creates an empty object and assigns name and data to it
-        seriesData[medal] = {};
-        seriesData[medal].name = medal;
-        seriesData[medal].data = [];
-        seriesData[medal].data.push(country[medal]);
-      }
-    }
-  });
+function topCountriesChart(topCountriesJson) {
+  const topCountries = Object.keys(topCountriesJson);
+  const medalTypes = Object.keys(topCountriesJson[topCountries[0]]);
+
+  //  To convert to Series Data
+  const seriesData = medalTypes.map(medal => ({
+    name: medal,
+    data: topCountries.map(country => topCountriesJson[country][medal])
+  }));
 
   Highcharts.chart('topCountry', {
     chart: {
       type: 'column'
     },
     title: {
-      text: 'Top 10 Countries with most medals'
+      text: 'Top 10 Countries with Most Medals'
     },
     xAxis: {
-      categories: Object.keys(topCountries)
+      categories: Object.keys(topCountriesJson)
     },
     yAxis: {
       min: 0,
@@ -117,32 +102,28 @@ function topCountriesChart(topCountries) {
         }
       }
     },
-    series: Object.values(seriesData)
+    series: seriesData
   });
 }
 
 function participantsChart(participantsJson) {
-  const sortedKeys = Object.keys(participantsJson).sort((a, b) => parseInt(a) - parseInt(b)); //  Sorts the JSON
-  const sortedJson = {};
-  for (key of sortedKeys) {
-    sortedJson[key] = { ...participantsJson[key] }; // Deep Copies the JSON
-  }
+  const sortedOriginalKeys = Object.keys(participantsJson).sort(
+    (a, b) => parseInt(a, 10) - parseInt(b, 10)
+  ); //  Sorts the JSON
 
-  const seriesData = {}; //  To convert to Series Data
-  myObjectMap(sortedJson, decade => {
-    const genders = Object.keys(decade); //  Gets the Genders
-    for (gender of genders) {
-      if (seriesData[gender]) {
-        seriesData[gender].data.push(decade[gender]); // Pushes the value of Gender Type
-      } else {
-        //  Otherwise creates an empty object and assigns name and data to it
-        seriesData[gender] = {};
-        seriesData[gender].name = gender;
-        seriesData[gender].data = [];
-        seriesData[gender].data.push(decade[gender]);
-      }
-    }
-  });
+  const sortedJson = {};
+  sortedOriginalKeys.map(key => {
+    sortedJson[key] = participantsJson[key];
+  }); //  Sorted JSON
+
+  const sortedJsonKeys = Object.keys(sortedJson);
+  const genders = Object.keys(sortedJson[sortedJsonKeys[0]]);
+
+  //  To convert to Series Data
+  const seriesData = genders.map(gender => ({
+    name: gender,
+    data: sortedJsonKeys.map(year => sortedJson[year][gender])
+  }));
 
   Highcharts.chart('participants', {
     chart: {
@@ -179,24 +160,18 @@ function participantsChart(participantsJson) {
         borderWidth: 0
       }
     },
-    series: Object.values(seriesData)
+    series: seriesData
   });
 }
 
 function averageAgeChart(averageCountJson) {
-  const seriesData = {}; //  To convert to Series Data
-  myObjectMap(averageCountJson, year => {
-    const average = Object.keys(year)[0]; //  Gets the name average
-    if (seriesData[average]) {
-      seriesData[average].data.push(parseFloat(year[average])); // Pushes the value of Average
-    } else {
-      //  Otherwise creates an empty object and assigns name and data to it
-      seriesData[average] = {};
-      seriesData[average].name = average;
-      seriesData[average].data = [];
-      seriesData[average].data.push(parseFloat(year[average]));
-    }
-  });
+  const years = Object.keys(averageCountJson);
+  const averageKey = Object.keys(averageCountJson[years[0]]);
+  //  To convert to Series Data
+  const seriesData = averageKey.map(avgKey => ({
+    name: avgKey,
+    data: years.map(year => parseFloat(averageCountJson[year][avgKey]))
+  }));
 
   Highcharts.chart('averageAge', {
     chart: {
@@ -224,7 +199,7 @@ function averageAgeChart(averageCountJson) {
         enableMouseTracking: false
       }
     },
-    series: Object.values(seriesData)
+    series: seriesData
   });
 }
 

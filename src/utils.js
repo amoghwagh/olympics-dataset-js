@@ -10,6 +10,7 @@ function convertToDecade(threeDigitYear) {
 function myObjectMap(curObj, appliedFunction) {
   const obj = {};
   const curObjKeys = Object.keys(curObj);
+  // eslint-disable-next-line array-callback-return
   curObjKeys.map(eachKey => {
     obj[eachKey] = appliedFunction(curObj[eachKey]);
   });

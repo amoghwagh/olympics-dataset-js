@@ -1,9 +1,11 @@
-function createTable(medalWinnersJson) { // A table is created and rows are dynamically alloted based on the number of years present
+function createTable(medalWinnersJson) {
+  // A table is created and rows are dynamically alloted based on the number of years present
   const table = document.getElementById('medalTable');
   const yearKeys = Object.keys(medalWinnersJson);
   let rowCount = 0;
+  // eslint-disable-next-line no-restricted-syntax
   for (const year of Object.keys(medalWinnersJson)) {
-    const row = table.insertRow(rowCount+1); // New Row is created
+    const row = table.insertRow(rowCount + 1); // New Row is created
     const yearCell = row.insertCell(0); // New cell is created at position 0
     const nameCell = row.insertCell(1); // New cell is created at position 1
 
@@ -15,6 +17,6 @@ function createTable(medalWinnersJson) { // A table is created and rows are dyna
 
 fetch('./data.json') // Data is fetched from data.json File
   .then(r => r.json())
-  .then((data) => {
+  .then(data => {
     createTable(data.medalWinners);
   });
